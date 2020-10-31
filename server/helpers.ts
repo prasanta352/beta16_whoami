@@ -1,4 +1,4 @@
-getDirectionrequire("dotenv").config();
+require("dotenv").config();
 const os = require("os");
 import axios from "axios";
 
