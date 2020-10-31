@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,6 +48,8 @@ public class Result extends AppCompatActivity {
 
 
     private void attemptSendSms() {
+        final Preference preference = new Preference(this);
+        final SmsImplementation sms = new SmsImplementation(this);
 
         final List<String> smsList = new ArrayList<>();
         //the array adapter to load data into list
@@ -56,27 +57,22 @@ public class Result extends AppCompatActivity {
         //attaching adapter to listview
         mListView.setAdapter(arrayAdapter);
 
-        SmsImplementation sms = new SmsImplementation(this);
         sms.setLocation(mFrom, mTo);
-        sms.sendRequest(new BaseImplementation.OnSendRequestResponseListener() {
+
+
+        new MockSmsReceiver().sendSms(this, preference.getServerMobileNo(), sms.makeSmsBody(), new MockSmsReceiver.OnMessageSendReceiver() {
             @Override
-            public void onResponse(boolean success) {
-                mSentSMS = success;
-                Log.d(TAG, "onResponse: " + mSentSMS);
+            public void onSmsSent() {
+                sms.startGettingResponse(new BaseImplementation.OnGettingResponseListener() {
+                    @Override
+                    public void onResponse(String responses) {
+                        Log.d(TAG, "onResponse: " + responses);
+                        mProgressBar.setVisibility(View.GONE);
+                        arrayAdapter.add(responses);
+                    }
+                });
             }
         });
-
-        if (mSentSMS) {
-            sms.startGettingResponse(new BaseImplementation.OnGettingResponseListener() {
-                @Override
-                public void onResponse(String responses) {
-                    Log.d(TAG, "onResponse: " + responses);
-                    mProgressBar.setVisibility(View.GONE);
-                    arrayAdapter.add(responses);
-                }
-            });
-
-        }
 
     }
 
