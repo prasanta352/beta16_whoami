@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.Result"></activity>
+        <activity android:name=".Activity.Result" />
         <activity android:name=".Activity.Query">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,14 +21,14 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".Activity.Implementation.SmsImplementation"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter android:priority="10" >
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
+<!--        <receiver-->
+<!--            android:name=".Activity.Implementation.SmsImplementation"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter android:priority="10" >-->
+<!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
     </application>
 
