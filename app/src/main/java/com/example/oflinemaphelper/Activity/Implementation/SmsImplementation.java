@@ -15,7 +15,7 @@ public class SmsImplementation implements BaseImplementation {
     public String mTo = null;
     private final Context mContext;
     private final String TAG = "BaseImplementation";
-    private final String DESTINATION_MOBILE_NO = "9547466422";
+    private final String DESTINATION_MOBILE_NO = "xxxxxxxxx";
 
     public SmsImplementation(Context c) {
         super();
@@ -70,11 +70,13 @@ public class SmsImplementation implements BaseImplementation {
                         String phone = smsMessage.getOriginatingAddress();
                         String message = smsMessage.getMessageBody();
 
-                        String mMessage = phone + ": " + message;
-                        Log.d(TAG, "onReceive: " + mMessage);
+                        Log.d(TAG, "onReceive: " + phone + ": " + message);
 
-                        // message has been received call the call back function with the message
-                        responseListener.onResponse(mMessage);
+                        if(phone.contains(DESTINATION_MOBILE_NO)) {
+                            // message has been received call the call back function with the message
+                            responseListener.onResponse(message);
+                        }
+
                     }
                 }
 
