@@ -2,6 +2,7 @@ package com.example.oflinemaphelper.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -63,6 +64,9 @@ public class Query extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             Log.d(TAG, "attemptQuery: attempt");
+            Intent intent = new Intent(this, Result.class);
+            startActivity(intent);
+            finish();
 
         }
 
