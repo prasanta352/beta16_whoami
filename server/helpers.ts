@@ -1,5 +1,6 @@
 require("dotenv").config();
 const os = require("os");
+const { spawn } = require("child_process");
 import axios from "axios";
 
 const { MAPBOX_ACCESS_TOKEN } = process.env;
@@ -221,4 +222,32 @@ export const getDirection = async (
   } catch (error) {
     console.log(error);
   }
+};
+
+export const sendSms = (to: string, body: string) => {
+  // adb emu sms send 656556 "4575212asda sd1"
+
+  const ls = spawn("adb", ["emu", "sms", "send", to, body]);
+
+  ls.stdout.on("data", (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  ls.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  ls.on("close", (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+};
+
+export const chunkString = (str: string, size: number): string[] => {
+  if (str == null) return [];
+  let arr = [];
+  for (let i = 0; i < str.length / size; i++) {
+    const chunk = str.substring(i * size, i * size + size).replace(/\n/g, "");
+    arr.push(chunk);
+  }
+  return arr;
 };
