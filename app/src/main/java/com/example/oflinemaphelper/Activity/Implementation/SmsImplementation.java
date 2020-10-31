@@ -9,17 +9,21 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
+import com.example.oflinemaphelper.Activity.Preference;
+
 public class SmsImplementation implements BaseImplementation {
 
-    public String mFrom = null;
-    public String mTo = null;
     private final Context mContext;
     private final String TAG = "BaseImplementation";
-    private final String DESTINATION_MOBILE_NO = "xxxxxxxxx";
+    public String mFrom = null;
+    public String mTo = null;
+    private String DESTINATION_MOBILE_NO;
 
     public SmsImplementation(Context c) {
         super();
         mContext = c;
+        Preference preference = new Preference(c);
+        DESTINATION_MOBILE_NO = preference.getServerMobileNo();
     }
 
     @Override
@@ -63,20 +67,26 @@ public class SmsImplementation implements BaseImplementation {
                     Object[] sms = (Object[]) bundle.get("pdus");
 
                     // For every SMS message received
-                    for (Object sm : sms) {
-                        // Convert Object array
-                        SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sm);
+                    if (sms != null) {
+                        for (Object sm : sms) {
+                            // Convert Object array
+                            SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sm);
 
-                        String phone = smsMessage.getOriginatingAddress();
-                        String message = smsMessage.getMessageBody();
+                            String phone = smsMessage.getOriginatingAddress();
+                            String message = smsMessage.getMessageBody();
 
-                        Log.d(TAG, "onReceive: " + phone + ": " + message);
+                            Log.d(TAG, "onReceive: " + phone + ": " + message);
 
-                        if(phone.contains(DESTINATION_MOBILE_NO)) {
-                            // message has been received call the call back function with the message
-                            responseListener.onResponse(message);
+                            if (phone != null && phone.contains(DESTINATION_MOBILE_NO)) {
+                                // message has been received call the call back function with the message
+                                responseListener.onResponse(message);
+                            }else {
+                                Log.d(TAG, "onReceive: Phone No Is null");
+                            }
+
                         }
-
+                    } else {
+                        Log.d(TAG, "onReceive: sms is null");
                     }
                 }
 

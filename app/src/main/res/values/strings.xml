@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Ofline Map Helper</string>
+    <string name="server_url">Server Url</string>
+    <string name="server_mobile_no">Server Mobile No</string>
+    <string name="save">Save</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="get_direction">Get Direction</string>
+    <string name="default_from_text">Taj Mahal, new Dilhi, INDIA</string>
+    <string name="default_to_text">Raghubir Singh Junior Modern School, Dilhi,INDIA</string>
+    <string name="dev_settings">Dev Settings</string>
 </resources>

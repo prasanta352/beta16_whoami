@@ -1,30 +1,47 @@
 package com.example.oflinemaphelper.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.oflinemaphelper.R;
 
 public class Query extends AppCompatActivity {
     private static final String TAG = "Query";
-    private int PERMISSIONS_REQUEST_CODE_ACCESS_SEND_RECEIVE = 1001;
+    private static final int PERMISSIONS_REQUEST_CODE_ACCESS_SEND_RECEIVE = 1001;
     private EditText mFrom;
     private EditText mTo;
-    private Button mQueryBTN;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_settings, menu);
 
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.dev_settings) {
+            Intent intent = new Intent(this, DevSettingsActivity.class);
+
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +49,7 @@ public class Query extends AppCompatActivity {
         setContentView(R.layout.activity_query);
         mFrom = findViewById(R.id.from);
         mTo = findViewById(R.id.to);
-        mQueryBTN = findViewById(R.id.queryBTN);
-
+        Button mQueryBTN = findViewById(R.id.queryBTN);
 
 
         //set a button click listener on mQueryButton
@@ -43,6 +59,10 @@ public class Query extends AppCompatActivity {
                 attemptQuery();
             }
         });
+
+        Preference myPreference = new Preference(this);
+        Boolean s1 = myPreference.setServerUrl("http://192.168.0.108:3000");
+        Boolean s2 = myPreference.setServerMobileNo("9966336699");
     }
 
 

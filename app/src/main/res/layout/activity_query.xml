@@ -1,43 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="25dp"
     tools:context=".Activity.Query">
 
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/from"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="25dp">
+        android:layout_height="wrap_content"
+        android:hint="@string/from"
+        android:inputType="text"
+        android:text="@string/default_from_text"
+        android:autofillHints="address" />
+
+    <EditText
+        android:id="@+id/to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/to"
+        android:inputType="text"
+        android:autofillHints="address"
+        android:text="@string/default_to_text" />
+
+    <Button
+        android:id="@+id/queryBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="end"
+        android:text="@string/get_direction" />
 
 
-
-        <EditText
-            android:id="@+id/from"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="From"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/to"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="To"
-            android:inputType="text" />
-
-        <Button
-            android:id="@+id/queryBTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="right"
-            android:text="Done" />
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</LinearLayout>

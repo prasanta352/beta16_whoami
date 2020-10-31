@@ -8,7 +8,7 @@ import {
 } from "./helpers";
 const app = express();
 const port = 3000;
-const RECEIVER_MOBILE_NO = "xxxxxxxxx";
+const RECEIVER_MOBILE_NO = "9966336699";
 
 app.get("/", async (req, res) => {
   try {

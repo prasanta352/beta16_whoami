@@ -50,14 +50,17 @@ public class Result extends AppCompatActivity {
 
     private void attemptSendSms() {
 
-        final List<String> smsList = new ArrayList<String>();
+        final List<String> smsList = new ArrayList<>();
+        //the array adapter to load data into list
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(Result.this, android.R.layout.simple_list_item_1, smsList);
+        //attaching adapter to listview
+        mListView.setAdapter(arrayAdapter);
 
         SmsImplementation sms = new SmsImplementation(this);
         sms.setLocation(mFrom, mTo);
         sms.sendRequest(new BaseImplementation.OnSendRequestResponseListener() {
             @Override
             public void onResponse(boolean success) {
-
                 mSentSMS = success;
                 Log.d(TAG, "onResponse: " + mSentSMS);
             }
@@ -68,15 +71,8 @@ public class Result extends AppCompatActivity {
                 @Override
                 public void onResponse(String responses) {
                     Log.d(TAG, "onResponse: " + responses);
-//                    Toast.makeText(Result.this, responses, Toast.LENGTH_LONG).show();
-
                     mProgressBar.setVisibility(View.GONE);
-                    smsList.add(responses);
-                    String[] sms = smsList.toArray(new String[smsList.size()]);
-                    //the array adapter to load data into list
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Result.this, android.R.layout.simple_list_item_1, sms);
-                    //attaching adapter to listview
-                    mListView.setAdapter(arrayAdapter);
+                    arrayAdapter.add(responses);
                 }
             });
 
