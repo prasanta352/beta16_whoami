@@ -1,6 +1,7 @@
 package com.example.oflinemaphelper.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.oflinemaphelper.R;
 
@@ -23,6 +25,7 @@ public class Query extends AppCompatActivity {
     private Button mQueryBTN;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +34,7 @@ public class Query extends AppCompatActivity {
         mTo = findViewById(R.id.to);
         mQueryBTN = findViewById(R.id.queryBTN);
 
-        // check if sms permission is available or not. It is necessary for sending and receiving sms
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{
-                    Manifest.permission.SEND_SMS,
-                    Manifest.permission.RECEIVE_SMS
-            }, PERMISSIONS_REQUEST_CODE_ACCESS_SEND_RECEIVE);
-        }
+
 
         //set a button click listener on mQueryButton
         mQueryBTN.setOnClickListener(new View.OnClickListener() {
@@ -83,16 +78,27 @@ public class Query extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             Log.d(TAG, "attemptQuery: attempt");
-            //creating and initializing an Intent object
-            Intent intent = new Intent(this, Result.class);
-            //attach the key value pair using putExtra to this intent
-            intent.putExtra("FROM", from);
-            intent.putExtra("TO", to);
-            //starting the activity
-            startActivity(intent);
+
+            // check if sms permission is available or not. It is necessary for sending and receiving sms
+            if (ActivityCompat.checkSelfPermission(Query.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(Query.this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Query.this, new String[]{
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.RECEIVE_SMS
+                }, PERMISSIONS_REQUEST_CODE_ACCESS_SEND_RECEIVE);
+            } else {
+                // permission was given.
+                //creating and initializing an Intent object
+                Intent intent = new Intent(this, Result.class);
+                //attach the key value pair using putExtra to this intent
+                intent.putExtra("FROM", from);
+                intent.putExtra("TO", to);
+                //starting the activity
+                startActivity(intent);
 
 //            finish();
 
+            }
         }
 
     }

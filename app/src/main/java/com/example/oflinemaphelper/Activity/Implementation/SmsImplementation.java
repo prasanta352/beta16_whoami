@@ -1,12 +1,19 @@
 package com.example.oflinemaphelper.Activity.Implementation;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
+import android.widget.Toast;
 
 import java.util.List;
 
-public class SmsImplementation implements BaseImplementation {
+public class SmsImplementation  implements BaseImplementation {
 
     private SmsManager smsManager;
+    private String mMessage = null;
     public String mFrom = null;
     public String mTo = null;
 
@@ -28,9 +35,9 @@ public class SmsImplementation implements BaseImplementation {
             smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage("9547466422", null, message, null, null);
             responseListener.onResponse(true);
+        } else {
+            responseListener.onResponse(false);
         }
-
-        responseListener.onResponse(false);
     }
 
     @Override
@@ -39,7 +46,11 @@ public class SmsImplementation implements BaseImplementation {
         // 1. wait for response sms
         // 2. on getting response sms call responseListener.onResponse with the sms
 
-        List<String> list = null;
-        responseListener.onResponse(list);
+
+        responseListener.onResponse(mMessage);
+
     }
+
+
+
 }

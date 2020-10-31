@@ -12,7 +12,7 @@ public interface BaseImplementation {
          * response list.
          * @param responses The view that was clicked.
          */
-        void onResponse(List<String> responses);
+        void onResponse(String responses);
     }
 
     interface OnSendRequestResponseListener{
