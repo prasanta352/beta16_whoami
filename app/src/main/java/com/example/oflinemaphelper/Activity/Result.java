@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +22,8 @@ import java.util.List;
 public class Result extends AppCompatActivity {
 
     private static final String TAG = "Result";
+    private ImageView smsSending;
+    private TextView smsSendingText;
     private String mFrom;
     private String mTo;
     private ProgressBar mProgressBar;
@@ -32,6 +36,8 @@ public class Result extends AppCompatActivity {
         setContentView(R.layout.activity_result);
         mProgressBar = findViewById(R.id.progress_circular);
         mListView = findViewById(R.id.listView);
+        smsSending = findViewById(R.id.sms_sending);
+        smsSendingText = findViewById(R.id.sms_is_sending_text);
         mProgressBar.setVisibility(View.VISIBLE);
 
 
@@ -63,16 +69,22 @@ public class Result extends AppCompatActivity {
         new MockSmsReceiver().sendSms(this, preference.getServerMobileNo(), sms.makeSmsBody(), new MockSmsReceiver.OnMessageSendReceiver() {
             @Override
             public void onSmsSent() {
+                Log.d(TAG, "onSmsSent: Query Sms Send");
+
+                smsSendingText.setText("Sms Has Been Sent Waiting For Response ..");
                 sms.startGettingResponse(new BaseImplementation.OnGettingResponseListener() {
                     @Override
                     public void onResponse(String responses) {
                         Log.d(TAG, "onResponse: " + responses);
+                        smsSending.setVisibility(View.GONE);
+                        smsSendingText.setVisibility(View.GONE);
                         mProgressBar.setVisibility(View.GONE);
                         arrayAdapter.add(responses);
                     }
                 });
             }
         });
+
 
     }
 

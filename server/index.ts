@@ -13,12 +13,12 @@ const RECEIVER_MOBILE_NO = "9966336699";
 app.get("/", async (req, res) => {
   try {
     const { query } = req;
-    const { from, to } = query as { from?: string; to?: string };
+    const { from, to,mobile=RECEIVER_MOBILE_NO } = query as { from?: string; to?: string,mobile?:string };
     if (from && to) {
-      //   const fromLocation = await getGeoCode(from);
-      //   const toLocation = await getGeoCode(to);
-      //   const steps = await getDirection(fromLocation, toLocation);
-      const steps = [
+      const fromLocation = await getGeoCode(from);
+      const toLocation = await getGeoCode(to);
+      const steps = await getDirection(fromLocation, toLocation);
+    /*  const steps = [
         "Head southwest, then turn left onto Motilal Nehru Marg",
         "Turn left onto Motilal Nehru Marg, then enter the roundabout and take the 4th exit onto Shahjahan Road",
         "Enter the roundabout and take the 4th exit onto Shahjahan Road",
@@ -27,11 +27,11 @@ app.get("/", async (req, res) => {
         "In 700 feet, turn left onto Shri Barada Ukil Marg",
         "Turn left onto Shri Barada Ukil Marg, then you will arrive at your destination",
         "You have arrived at Work, on the right",
-      ];
+      ];*/
       console.log(steps);
 
       steps.forEach((step, i) => {
-        sendSms(RECEIVER_MOBILE_NO, `${i}. ${step}`);
+        sendSms(mobile, `${i}. ${step}`);
       });
 
       return res.send(steps);

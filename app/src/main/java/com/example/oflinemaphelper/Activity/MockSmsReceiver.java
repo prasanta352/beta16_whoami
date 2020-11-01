@@ -12,6 +12,7 @@ import android.util.Log;
 
 import org.json.JSONArray;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
@@ -109,7 +110,7 @@ TO: Taj Mahal new Dilhi INDIA
     private void getDirection(final Context ctx, final String mobileNo, final String from, final String to) {
         final DirectionProvider dp = new DirectionProvider();
 
-        executeLocalhostSmsForEmulator(ctx, mobileNo);
+        executeLocalhostSmsForEmulator(ctx, mobileNo,from,to);
         dp.getGeoCode(from, new DirectionProvider.OnLocationWatcher() {
             @Override
             public void OnLocationGet(final DirectionProvider.Location fromLocation) {
@@ -148,8 +149,8 @@ TO: Taj Mahal new Dilhi INDIA
 
     }
 
-    private void executeLocalhostSmsForEmulator(Context ctx, final String mobileNo) {
-
+    private void executeLocalhostSmsForEmulator(Context ctx, final String mobileNo, final String from, final String to) {
+        Log.d(TAG, "executeLocalhostSmsForEmulator: ");
         final Preference myPreference = new Preference(ctx);
 
         Thread thread = new Thread(new Runnable() {
@@ -157,11 +158,12 @@ TO: Taj Mahal new Dilhi INDIA
             @Override
             public void run() {
                 try {
+                    String url = myPreference.getServerUrl() + "?from="+ from +"&to="+to+"&mobile="+mobileNo;
                     //Your code goes here
                     Request request = new Request.Builder()
-                            .url(myPreference.getServerUrl() + "?from=Taj+Mahal+new+Dilhi+INDIA&to=Raghubir+Singh+Junior+Modern+School+Dilhi+INDIA")
+                            .url(url)
                             .build();
-
+                    Log.d(TAG, "url: "+url);
                     try {
                         OkHttpClient client = new OkHttpClient();
 

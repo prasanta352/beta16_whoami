@@ -25,7 +25,7 @@ public class Preference {
     }
 
     public String getServerMobileNo() {
-        return mySharedPref.getString(SERVER_MOBILE_NO_KEY, "8768104448");
+        return mySharedPref.getString(SERVER_MOBILE_NO_KEY, "9474433416");
     }
 
     public boolean setServerMobileNo(String serverMobileNo) {

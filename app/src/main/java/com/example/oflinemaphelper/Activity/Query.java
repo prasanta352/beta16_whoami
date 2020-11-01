@@ -25,10 +25,10 @@ import com.example.oflinemaphelper.R;
 public class Query extends AppCompatActivity {
     private static final String TAG = "Query";
     private static final int PERMISSIONS_REQUEST_CODE_ACCESS_SEND_RECEIVE = 1001;
+    private static final String[] mStateArray = {"Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"};
     private EditText mFrom;
     private EditText mTo;
     private Spinner mStateSpinner;
-    private static final String[] mStateArray = {"Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "National Capital Territory of Delhi", "Puducherry"};
     private String mState;
 
     @Override
@@ -80,7 +80,7 @@ public class Query extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 mState = mStateSpinner.getSelectedItem().toString();
-                Log.d(TAG, "onItemSelected: "+ mState);
+                Log.d(TAG, "onItemSelected: " + mState);
 
             }
 
@@ -138,8 +138,8 @@ public class Query extends AppCompatActivity {
                 //creating and initializing an Intent object
                 Intent intent = new Intent(this, Result.class);
                 //attach the key value pair using putExtra to this intent
-                intent.putExtra("FROM", from);
-                intent.putExtra("TO", to);
+                intent.putExtra("FROM", from + ", " + mState + ", India");
+                intent.putExtra("TO", to + ", " + mState + ", India");
                 //starting the activity
                 startActivity(intent);
 
