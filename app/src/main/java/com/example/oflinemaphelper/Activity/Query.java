@@ -10,8 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,12 +27,14 @@ public class Query extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE_ACCESS_SEND_RECEIVE = 1001;
     private EditText mFrom;
     private EditText mTo;
+    private Spinner mStateSpinner;
+    private static final String[] mStateArray = {"Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "National Capital Territory of Delhi", "Puducherry"};
+    private String mState;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_settings, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -50,7 +55,7 @@ public class Query extends AppCompatActivity {
         mFrom = findViewById(R.id.from);
         mTo = findViewById(R.id.to);
         Button mQueryBTN = findViewById(R.id.queryBTN);
-
+        mStateSpinner = findViewById(R.id.spinner_state);
 
         //set a button click listener on mQueryButton
         mQueryBTN.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +71,24 @@ public class Query extends AppCompatActivity {
 ////
         Log.d(TAG, "onCreate: ");
 
+        ArrayAdapter<String> adapterState = new ArrayAdapter<String>(Query.this, android.R.layout.simple_spinner_item, mStateArray);
+        adapterState.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mStateSpinner.setAdapter(adapterState);
 
+        mStateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                mState = mStateSpinner.getSelectedItem().toString();
+                Log.d(TAG, "onItemSelected: "+ mState);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 

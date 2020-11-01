@@ -8,6 +8,17 @@
     android:padding="25dp"
     tools:context=".Activity.Query">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select state"
+        android:textSize="20dp" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_state"
+        android:tooltipText="Select state" />
 
     <EditText
         android:id="@+id/from"
