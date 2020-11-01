@@ -92,7 +92,7 @@ public class SmsImplementation implements BaseImplementation {
 
                             Log.d(TAG, "onReceive: " + phone + ": " + message);
 
-                            if (phone != null && phone.equals(DESTINATION_MOBILE_NO)) {
+                            if (phone != null && phone.contains(DESTINATION_MOBILE_NO)) {
                                 // message has been received call the call back function with the message
                                 responseListener.onResponse(message);
                             } else {

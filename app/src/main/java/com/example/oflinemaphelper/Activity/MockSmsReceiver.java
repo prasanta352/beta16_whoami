@@ -21,7 +21,7 @@ import okhttp3.Response;
 
 public class MockSmsReceiver extends BroadcastReceiver {
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
-    private static final String TAG = "AppDemoTest";
+    private static final String TAG = "MockSmsReceiver";
 
     public void sendSms(Context ctx, String to, String messageBody, final OnMessageSendReceiver onMessageSendReceiver) {
         SmsManager smsManager = SmsManager.getDefault();
@@ -45,7 +45,7 @@ public class MockSmsReceiver extends BroadcastReceiver {
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(SENT);
-        ctx.registerReceiver(br, intentFilter);
+        ctx.getApplicationContext().registerReceiver(br, intentFilter);
 
     }
 
@@ -121,14 +121,16 @@ TO: Taj Mahal new Dilhi INDIA
                         dp.getDirection(toLocation, fromLocation, new DirectionProvider.OnDirectionWatcher() {
                             @Override
                             public void OnStepsGet(ArrayList<String> steps) {
-                                for (final String step : steps) {
-                                    // send direction through sms
-                                    sendSms(ctx, mobileNo, step, new OnMessageSendReceiver() {
+                                for (int i = 0; i < steps.size(); i++) {
+                                    final String step = steps.get(i);
+                                    Log.d(TAG, "OnStepsGet: step ---- "+step);
+                                    sendSms(ctx, mobileNo, String.format("%s. %s",i,step), new OnMessageSendReceiver() {
                                         @Override
                                         public void onSmsSent() {
                                             Log.d(TAG, String.format("onSmsSent: mobile ->%s step -> %s ", mobileNo, step));
                                         }
                                     });
+
                                 }
                                 Log.d(TAG, "OnStepsGet: " + steps);
                             }
