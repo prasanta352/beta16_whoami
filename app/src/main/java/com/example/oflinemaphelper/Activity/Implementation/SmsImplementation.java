@@ -32,6 +32,21 @@ public class SmsImplementation implements BaseImplementation {
         this.mTo = to;
     }
 
+    /**
+     * Message format
+     * -------------------------|
+     * FROM: {{FROM BODY}} \n   |
+     * TO: {{TO BODY}}          |
+     * -------------------------|
+     * Example                  |
+     * -------------------------|
+     * FROM: Raghubir Singh Junior Modern School Dilhi INDIA
+     * TO: Taj Mahal new Dilhi INDIA
+     */
+    public String makeSmsBody() {
+        return String.format("FROM: %s\nTO: %s", mFrom, mTo);
+    }
+
     @Override
     public void sendRequest(OnSendRequestResponseListener responseListener) {
         // 1. check if mFrom and mTo is not null
@@ -77,10 +92,10 @@ public class SmsImplementation implements BaseImplementation {
 
                             Log.d(TAG, "onReceive: " + phone + ": " + message);
 
-                            if (phone != null && phone.contains(DESTINATION_MOBILE_NO)) {
+                            if (phone != null && phone.equals(DESTINATION_MOBILE_NO)) {
                                 // message has been received call the call back function with the message
                                 responseListener.onResponse(message);
-                            }else {
+                            } else {
                                 Log.d(TAG, "onReceive: Phone No Is null");
                             }
 

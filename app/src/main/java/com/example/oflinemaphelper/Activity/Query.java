@@ -60,9 +60,14 @@ public class Query extends AppCompatActivity {
             }
         });
 
-        Preference myPreference = new Preference(this);
-        Boolean s1 = myPreference.setServerUrl("http://192.168.0.108:3000");
-        Boolean s2 = myPreference.setServerMobileNo("9966336699");
+//        Preference myPreference = new Preference(this);
+//        Boolean s1 = myPreference.setServerUrl("http://192.168.0.108:3000");
+//        Boolean s2 = myPreference.setServerMobileNo("8768104448");
+////
+        Log.d(TAG, "onCreate: ");
+
+
+
     }
 
 
